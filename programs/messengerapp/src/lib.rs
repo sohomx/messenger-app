@@ -5,6 +5,7 @@ declare_id!("yLcwxfEuFNG5pfNn4VBJ3hhf5UHnMm6mkrpx3Y2vLLD");
 #[program]
 pub mod messengerapp {
     use super::*;
+
     pub fn initialize(ctx: Context<Initialize>, data: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
         let copy = data.clone();
@@ -29,4 +30,16 @@ pub struct Initialize<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
     pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct Update<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
+
+#[account]
+pub struct BaseAccount {
+    pub data: String,
+    pub data_list: Vec<String>,
 }
